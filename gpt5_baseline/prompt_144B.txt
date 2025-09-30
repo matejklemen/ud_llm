@@ -1,0 +1,5 @@
+What is the position of negative words relative to the beginning and end of a clause and with respect to adjacency to the verb in the {lang_name} language? The possible answers are "At beginning of clause separated from verb", "Preceding verb, separated from verb, but not at beginning of clause", "Immediately preverbal", "Immediately postverbal", "Following verb, separated from verb, but not at end of clause", "At end of clause, separated from verb".
+In the first line, respond with the dominant order.
+In the second line, respond with all orders that appear in the {lang_name} language.
+In the third line, respond with a JSON containing the probability distribution of different orders in the {lang_name} language.
+Answer concisely. Do not provide an explanation.
