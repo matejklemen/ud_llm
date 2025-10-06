@@ -6,7 +6,7 @@ def extract_ordering(sentence):
     def check_dependents(head_id):
         left, right = 0, 0
         for dep in sentence:
-                if dep["head"] == head_id and dep["deprel"] == "acl":
+                if dep["head"] == head_id and dep["deprel"] in ["acl", "acl:relcl"]:
                     if int(dep["id"]) < int(head_id):
                         left += 1
                     elif int(dep["id"]) > int(head_id):

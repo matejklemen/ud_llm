@@ -16,11 +16,16 @@ def extract_constituent_ordering(sentence):
                     elif dep["deprel"] in ["obj"] and dep["upos"] in ["NOUN"]:
                         ordering["O"] = dep["id"]
 
-                    elif dep["upos"] not in ["VERB", "AUX"] and dep["feats"] and dep["feats"].get("Polarity") == "Neg":
+                    elif dep["upos"] in ["AUX", "PART"] and dep["feats"] and dep["feats"].get("Polarity") == "Neg":
                         ordering["Neg"] = dep["id"]
         
-        if any([x is None for x in ordering.values()]):
+        if ordering["S"] is None or ordering["O"] is None:
             return None
+        
+        elif ordering["Neg"] is None:
+            del ordering["Neg"]
+            return "".join(sorted(ordering.keys(), key=lambda x: ordering[x]))
+        
         else:
             return "".join(sorted(ordering.keys(), key=lambda x: ordering[x]))
 
@@ -29,15 +34,14 @@ def extract_constituent_ordering(sentence):
     for tok in sentence:
         if tok["upos"] == "VERB" or tok["deprel"] == "root":
             curr_id = tok["id"]
-            if tok["feats"] and tok["feats"].get("Polarity") == "Neg":
-                orderings.append("Morphological negation")
-                continue
-
             curr_ordering = check_dependents(curr_id)
             
-            if curr_ordering:
+            if curr_ordering and tok["feats"] and tok["feats"].get("Polarity") == "Neg":
+                orderings.append("Morphological negation")
+
+            elif curr_ordering and "Neg" in curr_ordering:
                 orderings.append(curr_ordering)
-    
+
     if len(orderings) > 0:
         return orderings
     else:

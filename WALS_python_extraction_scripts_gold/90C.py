@@ -11,8 +11,9 @@ subprocess.run(["python", "90A.py", filepath, temp_filename_1])
 with open(temp_filename_1, "r", encoding="utf-8") as rf_90A:
     results_90A = json.load(rf_90A)
 
-reln_freq = results_90A["distribution"]["RelN"]
-nrel_freq = results_90A["distribution"]["NRel"]
+interim_distrib = results_90A["distribution"]
+reln_freq = interim_distrib["RelN"]
+nrel_freq = interim_distrib["NRel"]
 
 if nrel_freq > reln_freq * 2:
     final_answer = "NRel dominant"
@@ -20,6 +21,7 @@ else:
     final_answer = "NRel not dominant"
 
 result = {
+    "interim_distribution": interim_distrib,
     "final_answer": final_answer
 }
 

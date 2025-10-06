@@ -47,7 +47,7 @@ def extract_subordinator_position(sentence):
     clauses_dict = identify_clauses(sentence)
     for head_id in clauses_dict.keys():
         for dep_id in clauses_dict[head_id]:
-            if sentence[dep_id - 1]["upos"] == "SCONJ" and sentence[dep_id - 1]["deprel"] == "mark":
+            if sentence[dep_id - 1]["deprel"] == "mark" and sentence[head_id - 1]["deprel"] in ["advcl", "advcl:relcl"]:
 
                 if dep_id == min(clauses_dict[head_id]):
                     total_beg += 1

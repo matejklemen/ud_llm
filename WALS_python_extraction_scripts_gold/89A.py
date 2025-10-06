@@ -2,6 +2,16 @@ import conllu
 import sys
 import json
 
+
+def get_sentence_no_mwt(sentence):
+    new_sent = list()
+    for tok in sentence:
+        if type(tok["id"]) == int:
+            new_sent.append(tok)
+    
+    return new_sent
+
+
 def extract_attachment(sentence):
     def check_head(dep_id, head_id):
         left, right, verb = 0, 0, 0
@@ -46,7 +56,7 @@ with open(filepath, "r", encoding="utf-8") as rf:
     conllu_sents = conllu.parse(rf.read())
 
 for conllu_sent in conllu_sents:
-    curr_sent_left, curr_sent_right, curr_sent_verb = extract_attachment(conllu_sent)
+    curr_sent_left, curr_sent_right, curr_sent_verb = extract_attachment(get_sentence_no_mwt(conllu_sent))
 
     distrib["NumN"] += curr_sent_left
     distrib["NNum"] += curr_sent_right

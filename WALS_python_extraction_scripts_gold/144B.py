@@ -47,7 +47,7 @@ def extract_neg_word_position(sentence):
     clauses_dict = identify_clauses(sentence)
     for head_id in clauses_dict.keys():
         for dep_id in clauses_dict[head_id]:
-            if sentence[dep_id - 1]["upos"] not in ["VERB", "AUX"] and sentence[dep_id - 1]["feats"] and sentence[dep_id - 1]["feats"].get("Polarity") == "Neg":
+            if sentence[dep_id - 1]["upos"] in ["AUX", "PART"] and sentence[dep_id - 1]["feats"] and sentence[dep_id - 1]["feats"].get("Polarity") == "Neg":
 
                 if dep_id == min(clauses_dict[head_id]) and dep_id < len(sentence) and sentence[dep_id - 1]["head"] != sentence[dep_id]["id"]:
                     total_beg += 1

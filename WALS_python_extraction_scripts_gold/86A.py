@@ -6,8 +6,25 @@ def extract_ordering(sentence):
     def check_dependents(head_id):
         gen_left, gen_right = 0, 0
         for dep in sentence:
+                # First condition: the genitive noun connects via nmod and has Case=Gen
                 if dep["head"] == head_id and dep["upos"] == "NOUN" and dep["deprel"] == "nmod" \
                    and dep["feats"] and dep["feats"].get("Case") == "Gen":
+                    if int(dep["id"]) < int(head_id):
+                        gen_left += 1
+                    elif int(dep["id"]) > int(head_id):
+                        gen_right += 1
+
+                # Second condition: the genitive noun connects via nmod:poss
+                elif dep["head"] == head_id and dep["upos"] == "NOUN" and dep["deprel"] == "nmod:poss":
+                    if int(dep["id"]) < int(head_id):
+                        gen_left += 1
+                    elif int(dep["id"]) > int(head_id):
+                        gen_right += 1
+                
+                # Third condition: the genitive noun connects via nmod and has an ADP dependent with Case=Gen and the case deprel
+                elif dep["head"] == head_id and dep["upos"] == "NOUN" and dep["deprel"] == "nmod" and \
+                   any([x["head"] == dep["id"] and x["deprel"] == "case" and x["feats"] and 
+                        x["feats"].get("Case") == "Gen" for x in sentence]):
                     if int(dep["id"]) < int(head_id):
                         gen_left += 1
                     elif int(dep["id"]) > int(head_id):
@@ -30,7 +47,7 @@ def extract_ordering(sentence):
 
 def get_final_answer(orderings):
     if all([x == 0 for x in orderings.values()]):
-        return "No Case=Gen feature"
+        return "No relevant examples"
     
     dominant = max(orderings.items(), key=lambda x: x[1])
 
