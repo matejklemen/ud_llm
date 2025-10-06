@@ -1,6 +1,7 @@
 import sys
 import json
 import subprocess
+from collections import Counter
 
 
 def get_combinations(dict1, dict2):
@@ -45,9 +46,10 @@ adp_result = correct_values[results_85A["final_answer"]]
 
 final_answer = {
     "interim_distribution": {"83A": interim_83A, "85A": interim_85A},
-    "combinations_distribution": combinations_distrib,
+    "distribution": Counter(combinations_distrib),
     "final_answer": max(combinations_distrib, key=combinations_distrib.get)
 }
 
 with open(out_path, "w", encoding="utf-8") as wf:
+    print(final_answer)
     json.dump(final_answer, wf)
