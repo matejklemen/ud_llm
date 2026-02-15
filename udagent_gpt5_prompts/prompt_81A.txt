@@ -1,0 +1,17 @@
+You are given a sentence from the Universal Dependencies dataset in the CONLL-U format. A sentence is a list of tokens.
+Each token is a dictionary with the following properties (keys):
+'id': Word index, integer starting at 1 for each new sentence.
+'form': Word form or punctuation symbol.
+'lemma': Lemma or stem of word form.
+'upos': Universal part-of-speech tag. The possible values are 'ADJ' (adjective), 'ADP' (adposition), 'ADV' (adverb), 'AUX' (auxiliary), 'CCONJ' (coordinating conjunction), 'DET' (determiner), 'INTJ' (interjection), 'NOUN' (noun), 'NUM' (numeral), 'PART' (particle), 'PRON' (pronoun), 'PROPN' (proper noun), 'PUNCT' (punctuation), 'SCONJ' (subordinating conjunction), 'SYM' (symbol), 'VERB' (verb), 'X' (other).
+'xpos': Optional language-specific (or treebank-specific) part-of-speech / morphological tag; underscore (_) if not available.
+'feats': List of morphological features from the universal feature inventory or from a defined language-specific extension; underscore (_) if not available.
+'head': Head of the current word, which is either a value of ID or zero (0).
+'deprel': Universal dependency relation to the HEAD (root if HEAD = 0) or a defined language-specific subtype of one. The possible values are 'acl' (clausal modifier of noun), 'advcl' (adverbial clause modifier), 'advmod' (adverbial modifier), 'amod' (adjectival modifier), 'appos' (appositional modifier), 'aux' (auxiliary), 'case' (case marking), 'cc' (coordinating conjunction), 'ccomp' (clausal complement), 'clf' (classifier), 'compound' (compound), 'conj' (conjunct), 'cop' (copula), 'csubj' (clausal subject), 'dep' (unspecified dependency), 'det' (determiner), 'discourse' (discourse element), 'dislocated' (dislocated element), 'expl' (expletive), 'fixed' (fixed multiword expression), 'flat' (flat expression), 'goeswith' (goes with), 'iobj' (indirect object), 'list' (list), 'mark' (marker), 'nmod' (nominal modifier), 'nsubj' (nominal subject), 'nummod' (numeric modifier), 'obj' (object), 'obl' (oblique nominal), 'orphan' (orphan), 'parataxis' (parataxis), 'punct' (punctuation), 'reparandum' (overriden disfluency), 'root' (root), 'vocative' (vocative), 'xcomp' (open clausal complement).
+'deps': Enhanced dependency graph in the form of a list of head-deprel pairs.
+'misc': Any other annotation.
+
+Define a Python function 'solve' that accepts an argument 'sentence' and returns the answer to the following problem:
+What is the order of the subject, object, and verb in the sentence? The possible answers are "SOV", "SVO", "VSO", "VOS", "OVS", "OSV".
+If the question is not answerable, the function should return None. Otherwise, return all answers (strings) in a list.
+Return only the code.
